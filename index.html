@@ -5,14 +5,18 @@
     <link href="/styles.css" type="text/css" rel="stylesheet">
   </head>
   <body>
+<!-- Shortcut, .game-.... + TAB -->
     <div class="game-container">
+<!-- 352px198p gives a 16:9 aspect ratio for our game to render -->
       <canvas class="game-canvas" width="352" height="198"></canvas>
     </div>
 
 
     <!-- Scripts -->
+<!--  Currently, the sort order of these scripts is not important but, if there is any code outside constructor, it becomes imp  -->
     <script src="/Overworld.js"></script>
-    <script src="/init.js"></script>
-
+    <script src="/GameObject.js"></script>
+    <script src="/Sprite.js"></script>
+    <script src="/init.js"></script> <!-- Call init at the end or else there will be no reference error for object accessed before -->
   </body>
 </html>
