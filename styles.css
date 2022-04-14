@@ -7,8 +7,10 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+/* to disable scrolling */
 }
 
+/* home to house entire game */
 .game-container {
   position: relative; 
   width: 352px;
@@ -17,8 +19,11 @@ body {
   outline: 1px solid #fff;
 
   transform: scale(3) translateY(50%);
+/* scale(3) is multiply each pixel by 3.
+Scale by default scale from centre so translateY to move the game container 50% down by the height of the container */
 }
 
 .game-container canvas {
   image-rendering: pixelated;
+/* to remove blurriness from the pixels */
 }
