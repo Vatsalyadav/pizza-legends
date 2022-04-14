@@ -9,6 +9,17 @@ class Sprite {
             this.isLoaded = true; // draw the image if this flag is true
         }
 
+        // Shadow
+        this.shadow = new Image();
+        this.shadow.src = "/images/characters/shadow.png";
+        this.useShadow = true;
+        if (this.useShadow) {
+            this.shadow.onload = () => {
+                this.isShadowLoaded = true;
+            }
+        }
+
+
         // we are setting animations up so that any GameObject can pass its own definition of animation and have flexibility
         /* Configure animation and initial state */
         this.animations = config.animations || {
@@ -25,7 +36,9 @@ class Sprite {
         const x =this.gameObject.x * 16 - 8; // same as previous nudge
         const y =this.gameObject.y * 16 - 18;
 
-        ctx.drawImage(this.image,
+        this.isShadowLoaded && ctx.drawImage(this.shadow, x, y)
+
+        this.isLoaded && ctx.drawImage(this.image,
             0,0, // left and right cut
             32,32, // size
             x,y, // nudge
