@@ -8,7 +8,19 @@ class Overworld {
         this.ctx = this.canvas.getContext("2d");
     }
 
+    startGameLoop() {
+        const step = () => {
+            requestAnimationFrame(() => { // in built function to help with calling every single frame
+                step();
+            })
+        }
+        step();
+    }
+
     init() {
+
+        this.startGameLoop();
+
         /* Imp Info: The canvas draws things one over another by the order of arrival,
         so ordering of created image objects is important */
         // 1. for canvas, an image needs to be loaded in memory so create an object. No need to inject it in dom
@@ -32,6 +44,8 @@ class Overworld {
             src: "/images/characters/people/npc1.png"
         })
 
+
+        // This band-aid will be replaced with a game loop which fires one frame every second
         setTimeout(() => {
             hero.sprite.draw(this.ctx); // 5. this currently won't work because draw takes some time to draw and it'll fail hence moving to set timeout
             npc1.sprite.draw(this.ctx);
