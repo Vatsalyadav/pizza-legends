@@ -6,10 +6,28 @@ class Overworld {
         // gets the container and then access the game canvas within it
         this.canvas = this.element.querySelector(".game-canvas");
         this.ctx = this.canvas.getContext("2d");
+        this.map = null;
     }
 
     startGameLoop() {
         const step = () => {
+
+            // to clear canvas and smudge left from previous frame
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+            // Draw Lower Layer
+            this.map.drawLowerImage(this.ctx);
+
+            // Draw Game Objects in between lower and upper layers
+            Object.values(this.map.gameObjects).forEach(object => {
+                object.x += 0.02;
+                object.sprite.draw(this.ctx);
+            })
+            // iterate through all gameObjects and draw them
+
+            // Draw Upper Layer
+            this.map.drawUpperImage(this.ctx);
+
             requestAnimationFrame(() => { // in built function to help with calling every single frame
                 step();
             })
@@ -18,39 +36,8 @@ class Overworld {
     }
 
     init() {
-
+        this.map = new OverWorldMap(window.OverWorldMaps.Kitchen);
         this.startGameLoop();
-
-        /* Imp Info: The canvas draws things one over another by the order of arrival,
-        so ordering of created image objects is important */
-        // 1. for canvas, an image needs to be loaded in memory so create an object. No need to inject it in dom
-        const image = new Image();
-        // 3. It'll load on our canvas using its context
-        image.onload = () => {
-            this.ctx.drawImage(image, 0, 0) // source, x, y coordinate
-        };
-        image.src = "/images/maps/DemoLower.png";
-        // 2. Once the image is download -> 3
-
-        // 4. Place some Game Objects!
-        const hero = new GameObject({
-            x: 7,
-            y: 9,
-        })
-
-        const npc1 = new GameObject({
-            x: 5,
-            y: 6,
-            src: "/images/characters/people/npc1.png"
-        })
-
-
-        // This band-aid will be replaced with a game loop which fires one frame every second
-        setTimeout(() => {
-            hero.sprite.draw(this.ctx); // 5. this currently won't work because draw takes some time to draw and it'll fail hence moving to set timeout
-            npc1.sprite.draw(this.ctx);
-        }, 200)
-
     }
 
 }
