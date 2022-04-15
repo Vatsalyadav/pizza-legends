@@ -20,7 +20,10 @@ class Overworld {
 
             // Draw Game Objects in between lower and upper layers
             Object.values(this.map.gameObjects).forEach(object => {
-                object.x += 1;
+                // object.x += 1;
+                object.update({
+
+                });
                 object.sprite.draw(this.ctx);
             })
             // iterate through all gameObjects and draw them

@@ -28,9 +28,9 @@ window.OverWorldMaps = {
         lowerSrc: "/images/maps/DemoLower.png",
         upperSrc: "/images/maps/DemoUpper.png",
         gameObjects: {
-            hero: new GameObject({
+            hero: new Person({
                 x: utils.withGrid(5),
-                y: utils.withGrid(6),
+                y: utils.withGrid(6)
             }),
             // npc1: new GameObject({
             //     x: utils.withGrid(4),
