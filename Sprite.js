@@ -23,7 +23,7 @@ class Sprite {
         // we are setting animations up so that any GameObject can pass its own definition of animation and have flexibility
         /* Configure animation and initial state */
         this.animations = config.animations || {
-            idleDown: [[0,0]]
+            idleDown: [[0, 0]]
         }
         this.currentAnimation = config.currentAnimation || "idleDown";
         this.currentAnimationFrame = 0;
@@ -33,16 +33,16 @@ class Sprite {
     }
 
     draw(ctx) {
-        const x =this.gameObject.x * 16 - 8; // same as previous nudge
-        const y =this.gameObject.y * 16 - 18;
+        const x = this.gameObject.x - 8; // same as previous nudge
+        const y = this.gameObject.y - 18;
 
         this.isShadowLoaded && ctx.drawImage(this.shadow, x, y)
 
         this.isLoaded && ctx.drawImage(this.image,
-            0,0, // left and right cut
-            32,32, // size
-            x,y, // nudge
-            32,32 // drawing size
-            )
+            0, 0, // left and right cut
+            32, 32, // size
+            x, y, // nudge
+            32, 32 // drawing size
+        )
     }
 }

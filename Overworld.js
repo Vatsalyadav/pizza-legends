@@ -20,7 +20,7 @@ class Overworld {
 
             // Draw Game Objects in between lower and upper layers
             Object.values(this.map.gameObjects).forEach(object => {
-                object.x += 0.02;
+                object.x += 1;
                 object.sprite.draw(this.ctx);
             })
             // iterate through all gameObjects and draw them
@@ -36,7 +36,7 @@ class Overworld {
     }
 
     init() {
-        this.map = new OverWorldMap(window.OverWorldMaps.Kitchen);
+        this.map = new OverWorldMap(window.OverWorldMaps.DemoRoom);
         this.startGameLoop();
     }
 
