@@ -24,12 +24,19 @@ class Sprite {
         /* Configure animation and initial state */
         this.animations = config.animations || {
             "idle-down": [[0, 0]],
-            "walk-down": [[1, 0], [0, 0], [3, 0], [0, 0]]
+            "idle-right": [[0, 1]],
+            "idle-up": [[0, 2]],
+            "idle-left": [[0, 3]],
+            "walk-down": [[1, 0], [0, 0], [3, 0], [0, 0]],
+            "walk-right": [[1, 1], [0, 1], [3, 1], [0, 1]],
+            "walk-up": [[1, 2], [0, 2], [3, 2], [0, 2]],
+            "walk-left": [[1, 3], [0, 3], [3, 3], [0, 3]],
+
         }
-        this.currentAnimation = "walk-down" //config.currentAnimation || "idle-down"; // which animation we are gonna pull from
+        this.currentAnimation = config.currentAnimation || "idle-down"; // which animation we are gonna pull from
         this.currentAnimationFrame = 0; // which animation series we are gonna use from array
 
-        this.animationFrameLimit = config.animationFrameLimit || 16; // number of frames ~ speed of character
+        this.animationFrameLimit = config.animationFrameLimit || 8; // number of frames ~ speed of character
         this.animationFrameProgress = this.animationFrameLimit;
 
         // Reference the game object
@@ -38,6 +45,14 @@ class Sprite {
 
     get frame() {
         return this.animations[this.currentAnimation][this.currentAnimationFrame];
+    }
+
+    setAnimation(key) { // for changing animation of the character
+        if (this.currentAnimation !== key){
+            this.currentAnimation = key;
+            this.currentAnimationFrame = 0;
+            this.animationFrameProgress = this.animationFrameLimit;
+        }
     }
 
     updateAnimationProgress() { // for changing frames in "walk-down/../...": [[1, 0], [0, 0], [3, 0], [0, 0]] array

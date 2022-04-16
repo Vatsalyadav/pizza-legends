@@ -16,6 +16,7 @@ class Person extends GameObject {
 
     update(state) {
         this.updatePosition();
+        this.updateSprite(state);
         if (this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow) { // if we have some movement left and also directions given as input
             this.direction = state.arrow;
             this.movingProgressRemaining = 16;
@@ -28,6 +29,17 @@ class Person extends GameObject {
             const [property, change] = this.directionUpdate[this.direction];
             this[property] += change;
             this.movingProgressRemaining -= 1;
+        }
+    }
+
+    updateSprite(state) { // use sprite sheet to show movement animation
+
+        if (this.isPlayerControlled && this.movingProgressRemaining === 0 && !state.arrow) {
+            this.sprite.setAnimation("idle-" + this.direction);
+            return;
+        }
+        if (this.movingProgressRemaining > 0) { // if the movement is left, then walk in the direction animation
+            this.sprite.setAnimation("walk-" + this.direction);
         }
     }
 }
