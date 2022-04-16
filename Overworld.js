@@ -22,7 +22,7 @@ class Overworld {
             Object.values(this.map.gameObjects).forEach(object => {
                 // object.x += 1;
                 object.update({
-
+                    arrow: this.directionInput.direction
                 });
                 object.sprite.draw(this.ctx);
             })
@@ -40,6 +40,10 @@ class Overworld {
 
     init() {
         this.map = new OverWorldMap(window.OverWorldMaps.DemoRoom);
+
+        this.directionInput = new DirectionInput();
+        this.directionInput.init();
+
         this.startGameLoop();
     }
 

@@ -1,8 +1,9 @@
 class Person extends GameObject {
     constructor(config) {
         super(config);
-        this.movingProgressRemaining = 16; // for maintaining grid movement
+        this.movingProgressRemaining = 0; // for maintaining grid movement
 
+        this.isPlayerControlled = config.isPlayerControlled || false;
         // write movement instructions
         this.directionUpdate = {
             "up": ["y", -1],
@@ -15,6 +16,11 @@ class Person extends GameObject {
 
     update(state) {
         this.updatePosition();
+        if (this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow) { // if we have some movement left and also directions given as input
+            this.direction = state.arrow;
+            this.movingProgressRemaining = 16;
+
+        }
     }
 
     updatePosition() {
