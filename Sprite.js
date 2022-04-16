@@ -23,13 +23,37 @@ class Sprite {
         // we are setting animations up so that any GameObject can pass its own definition of animation and have flexibility
         /* Configure animation and initial state */
         this.animations = config.animations || {
-            idleDown: [[0, 0]]
+            "idle-down": [[0, 0]],
+            "walk-down": [[1, 0], [0, 0], [3, 0], [0, 0]]
         }
-        this.currentAnimation = config.currentAnimation || "idleDown";
-        this.currentAnimationFrame = 0;
+        this.currentAnimation = "walk-down" //config.currentAnimation || "idle-down"; // which animation we are gonna pull from
+        this.currentAnimationFrame = 0; // which animation series we are gonna use from array
+
+        this.animationFrameLimit = config.animationFrameLimit || 16; // number of frames ~ speed of character
+        this.animationFrameProgress = this.animationFrameLimit;
 
         // Reference the game object
         this.gameObject = config.gameObject;
+    }
+
+    get frame() {
+        return this.animations[this.currentAnimation][this.currentAnimationFrame];
+    }
+
+    updateAnimationProgress() { // for changing frames in "walk-down/../...": [[1, 0], [0, 0], [3, 0], [0, 0]] array
+        // downtick frame progress
+        if (this.animationFrameProgress > 0) {
+            this.animationFrameProgress -= 1;
+            return;
+        }
+
+        // reset the progress/counter
+        this.animationFrameProgress = this.animationFrameLimit;
+        this.currentAnimationFrame += 1;
+        if (this.frame === undefined) {
+            this.currentAnimationFrame = 0;
+        }
+
     }
 
     draw(ctx) {
@@ -38,11 +62,15 @@ class Sprite {
 
         this.isShadowLoaded && ctx.drawImage(this.shadow, x, y)
 
+        const [frameX, frameY] = this.frame;
+
         this.isLoaded && ctx.drawImage(this.image,
-            0, 0, // left and right cut
+            frameX * 32, frameY * 32, // left and right cut
             32, 32, // size
             x, y, // nudge
             32, 32 // drawing size
         )
+
+        this.updateAnimationProgress();
     }
 }
