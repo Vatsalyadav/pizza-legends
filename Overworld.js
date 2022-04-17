@@ -22,7 +22,8 @@ class Overworld {
             Object.values(this.map.gameObjects).forEach(object => {
                 // object.x += 1;
                 object.update({
-                    arrow: this.directionInput.direction
+                    arrow: this.directionInput.direction,
+                    map: this.map
                 });
             })
 

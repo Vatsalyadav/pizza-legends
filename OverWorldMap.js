@@ -3,6 +3,8 @@ class OverWorldMap {
 
     constructor(config) {
         this.gameObjects = config.gameObjects;
+        // collision detection
+        this.walls = config.walls || {};
 
         // floor
         this.lowerImage = new Image();
@@ -13,6 +15,7 @@ class OverWorldMap {
         this.upperImage.src = config.upperSrc;
 
     }
+
     // reposition map as per Hero's location
     drawLowerImage(ctx, cameraPerson) {
         ctx.drawImage(this.lowerImage, utils.withGrid(10.5) - cameraPerson.x, utils.withGrid(6) - cameraPerson.y);
@@ -20,6 +23,11 @@ class OverWorldMap {
 
     drawUpperImage(ctx, cameraPerson) {
         ctx.drawImage(this.upperImage, utils.withGrid(10.5) - cameraPerson.x, utils.withGrid(6) - cameraPerson.y);
+    }
+
+    isSpaceTaken(currentX, currentY, direction) {
+        const {x,y} = utils.nextPosition(currentX, currentY, direction);
+        return this.walls[`${x},${y}`] || false;
     }
 }
 
@@ -38,6 +46,13 @@ window.OverWorldMaps = {
             //     y: utils.withGrid(5),
             //     src: "/images/characters/people/npc1.png"
             // })
+        },
+        walls: {
+            // "16,16": true
+            [utils.asGridCoords(7, 6)]: true, //dynamic key initialization, same as "16,16":true
+            [utils.asGridCoords(8, 6)]: true,
+            [utils.asGridCoords(7, 7)]: true,
+            [utils.asGridCoords(8, 7)]: true,
         }
     },
     Kitchen: {
