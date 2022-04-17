@@ -48,7 +48,7 @@ class Sprite {
     }
 
     setAnimation(key) { // for changing animation of the character
-        if (this.currentAnimation !== key){
+        if (this.currentAnimation !== key) {
             this.currentAnimation = key;
             this.currentAnimationFrame = 0;
             this.animationFrameProgress = this.animationFrameLimit;
@@ -71,9 +71,9 @@ class Sprite {
 
     }
 
-    draw(ctx) {
-        const x = this.gameObject.x - 8; // same as previous nudge
-        const y = this.gameObject.y - 18;
+    draw(ctx, cameraPerson) { // 10.5 and 6 because the width of the current screen is 22 tiles, so 1 tile will be occupied by hero and rest 21 can be divided into 10.5 - 10.5 each for centre alignment of the camera
+        const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x; // same as previous nudge
+        const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
 
         this.isShadowLoaded && ctx.drawImage(this.shadow, x, y)
 
