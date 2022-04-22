@@ -2,7 +2,7 @@ class Person extends GameObject {
     constructor(config) {
         super(config);
         this.movingProgressRemaining = 0; // for maintaining grid movement
-
+        this.isStanding = false;
         this.isPlayerControlled = config.isPlayerControlled || false;
         // write movement instructions
         this.directionUpdate = {
@@ -49,14 +49,18 @@ class Person extends GameObject {
             // ready to walk
             state.map.moveWall(this.x, this.y, this.direction);
             this.movingProgressRemaining = 16;
+            this.updateSprite(state);
         }
 
         if (behaviour.type === "stand") {
+            this.isStanding = true;
             setTimeout(() => {
                 utils.emitEvent("PersonStandComplete", {
                     whoId: this.id
                 })
-            }, behaviour.time)
+                this.isStanding = false;
+            }, behaviour.time);
+
         }
     }
 

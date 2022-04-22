@@ -43,9 +43,12 @@ class OverWorldMap {
         })
     }
 
+    // start a cutscene event
     async startCutscene(events) {
         this.isCutscenePlaying = true;
 
+        // start a loop of async events
+        // await each one
         for (let i = 0; i < events.length; i++) {
             const eventHandler = new OverworldEvent({
                 event: events[i],
@@ -53,6 +56,9 @@ class OverWorldMap {
             })
             await eventHandler.init();
         }
+
+        // Reset NPCs to do their idle behaviour
+        Object.values(this.gameObjects).forEach(object => object.doBehaviourEvent(this));
 
         this.isCutscenePlaying = false;
     }

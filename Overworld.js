@@ -60,6 +60,7 @@ class Overworld {
 
         this.startGameLoop();
 
+        // start a cutscene when game starts
         this.map.startCutscene([
             { who: "hero", type: "walk",  direction: "down" },
             { who: "hero", type: "walk",  direction: "down" },
