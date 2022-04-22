@@ -14,6 +14,8 @@ class OverWorldMap {
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc;
 
+        this.isCutScenePlaying = false;
+
     }
 
     // reposition map as per Hero's location
@@ -31,10 +33,28 @@ class OverWorldMap {
     }
 
     mountObjects() {
-        Object.values(this.gameObjects).forEach(o => {
+        Object.keys(this.gameObjects).forEach(key => {
+
+            let object = this.gameObjects[key];
+            object.id = key; // like "hero"
+
             // TODO: determine if this object should actually mount
-            o.mount(this);
+            object.mount(this);
         })
+    }
+
+    async startCutscene(events) {
+        this.isCutscenePlaying = true;
+
+        for (let i = 0; i < events.length; i++) {
+            const eventHandler = new OverworldEvent({
+                event: events[i],
+                map: this,
+            })
+            await eventHandler.init();
+        }
+
+        this.isCutscenePlaying = false;
     }
 
     addWall(x, y) {
@@ -62,11 +82,29 @@ window.OverWorldMaps = {
                 x: utils.withGrid(5),
                 y: utils.withGrid(6)
             }),
-            // npc1: new GameObject({
-            //     x: utils.withGrid(4),
-            //     y: utils.withGrid(5),
-            //     src: "/images/characters/people/npc1.png"
-            // })
+            npcA: new Person({
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
+                src: "/images/characters/people/npc1.png",
+                behaviourLoop: [
+                    {type: "stand", direction: "left", time: 800},
+                    {type: "stand", direction: "up", time: 800},
+                    {type: "stand", direction: "right", time: 1200},
+                    {type: "stand", direction: "up", time: 300}
+                ]
+            }),
+            npcB: new Person({
+                x: utils.withGrid(3),
+                y: utils.withGrid(7),
+                src: "/images/characters/people/npc2.png",
+                behaviourLoop: [
+                    {type: "walk", direction: "left"},
+                    {type: "stand", direction: "up", time: 800},
+                    {type: "walk", direction: "up"},
+                    {type: "walk", direction: "right"},
+                    {type: "walk", direction: "down"},
+                ]
+            })
         },
         walls: {
             // "16,16": true
