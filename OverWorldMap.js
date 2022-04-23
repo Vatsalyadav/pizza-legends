@@ -57,10 +57,10 @@ class OverWorldMap {
             await eventHandler.init();
         }
 
-        // Reset NPCs to do their idle behaviour
-        Object.values(this.gameObjects).forEach(object => object.doBehaviourEvent(this));
-
         this.isCutscenePlaying = false;
+        // Reset NPCs to do their idle behaviour
+        Object.values(this.gameObjects).forEach(object => object.doBehaviourEvent(this))
+
     }
 
     addWall(x, y) {
@@ -86,7 +86,7 @@ window.OverWorldMaps = {
             hero: new Person({
                 isPlayerControlled: true,
                 x: utils.withGrid(5),
-                y: utils.withGrid(6)
+                y: utils.withGrid(6),
             }),
             npcA: new Person({
                 x: utils.withGrid(7),
@@ -96,7 +96,7 @@ window.OverWorldMaps = {
                     {type: "stand", direction: "left", time: 800},
                     {type: "stand", direction: "up", time: 800},
                     {type: "stand", direction: "right", time: 1200},
-                    {type: "stand", direction: "up", time: 300}
+                    {type: "stand", direction: "up", time: 300},
                 ]
             }),
             npcB: new Person({

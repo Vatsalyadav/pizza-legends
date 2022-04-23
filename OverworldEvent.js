@@ -21,7 +21,7 @@ class OverworldEvent {
             }
         }
 
-        document.addEventListener("PersonStandComplete", completeHandler);
+        document.addEventListener("PersonStandComplete", completeHandler)
     }
 
     walk(resolve) {
@@ -45,7 +45,7 @@ class OverworldEvent {
 
     init() {
         return new Promise(resolve => {
-            this[this.event.type](resolve);
+            this[this.event.type](resolve)
         })
     }
 }

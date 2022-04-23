@@ -9,7 +9,7 @@ class Person extends GameObject {
             "up": ["y", -1],
             "down": ["y", 1],
             "left": ["x", -1],
-            "right": ["x", 1]
+            "right": ["x", 1],
         };
 
     }
@@ -29,7 +29,7 @@ class Person extends GameObject {
                     direction: state.arrow
                 })
             }
-            this.updateSprite();
+            this.updateSprite(state);
         }
 
     }

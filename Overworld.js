@@ -30,10 +30,6 @@ class Overworld {
             // Draw Lower Layer
             this.map.drawLowerImage(this.ctx, cameraPerson);
 
-            // Draw Game Objects in between lower and upper layers
-            Object.values(this.map.gameObjects).forEach(object => {
-                object.sprite.draw(this.ctx, cameraPerson);
-            })
             // iterate through all gameObjects and draw them in order of northern character being drawn lower than southern
             Object.values(this.map.gameObjects).sort((a,b) => {
                 return a.y - b.y;

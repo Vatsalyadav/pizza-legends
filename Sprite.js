@@ -9,14 +9,14 @@ class Sprite {
             this.isLoaded = true; // draw the image if this flag is true
         }
 
-        // Shadow
+        //Shadow
         this.shadow = new Image();
-        this.shadow.src = "/images/characters/shadow.png";
-        this.useShadow = true;
+        this.useShadow = true; //config.useShadow || false
         if (this.useShadow) {
-            this.shadow.onload = () => {
-                this.isShadowLoaded = true;
-            }
+            this.shadow.src = "/images/characters/shadow.png";
+        }
+        this.shadow.onload = () => {
+            this.isShadowLoaded = true;
         }
 
 
@@ -33,7 +33,7 @@ class Sprite {
             "walk-left": [[1, 3], [0, 3], [3, 3], [0, 3]],
 
         }
-        this.currentAnimation = config.currentAnimation || "idle-down"; // which animation we are gonna pull from
+        this.currentAnimation = "idle-right"; // which animation we are gonna pull from
         this.currentAnimationFrame = 0; // which animation series we are gonna use from array
 
         this.animationFrameLimit = config.animationFrameLimit || 8; // number of frames ~ speed of character
